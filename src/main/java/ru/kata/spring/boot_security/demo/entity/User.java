@@ -1,35 +1,34 @@
 package ru.kata.spring.boot_security.demo.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import javax.persistence.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 
-@jakarta.persistence.Entity
+@Entity
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @jakarta.persistence.Column(name = "username")
+    @Column(name = "username")
     private String username;
 
-    @jakarta.persistence.Column(name = "password")
+    @Column(name = "password")
     private String password;
 
-    @jakarta.persistence.Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-    @jakarta.persistence.Column(name = "lastName")
+    @Column(name = "lastName")
     private String lastName;
 
-    @jakarta.persistence.Column(name = "age")
+    @Column(name = "age")
     private Byte age;
 
 
