@@ -1,7 +1,9 @@
 package ru.kata.spring.boot_security.demo.configs;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
@@ -15,11 +17,11 @@ import java.util.Set;
 public class Start implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public Start(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public Start(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -28,15 +30,15 @@ public class Start implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Role roleUser = roleRepository.findByName("USER");
+        Role roleUser = roleRepository.findByName("ROLE_USER");
         if (roleUser == null) {
-            roleUser = new Role(null, "USER");
+            roleUser = new Role(null, "ROLE_USER");
             roleRepository.save(roleUser);
         }
 
-        Role roleAdmin = roleRepository.findByName("ADMIN");
+        Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
         if (roleAdmin == null) {
-            roleAdmin = new Role(null, "ADMIN");
+            roleAdmin = new Role(null, "ROLE_ADMIN");
             roleRepository.save(roleAdmin);
         }
 
@@ -45,6 +47,8 @@ public class Start implements CommandLineRunner {
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin"));
+            admin.setAge((byte) 30);
+            admin.setLastName("admin1");
             Set<Role> roles = new HashSet<>();
             roles.add(roleAdmin);
             admin.setRoles(roles);
@@ -55,6 +59,8 @@ public class Start implements CommandLineRunner {
         if (userRepository.findByUsername("user") == null) {
             User user = new User();
             user.setUsername("user");
+            user.setAge((byte) 30);
+            user.setLastName("user1");
             user.setPassword(passwordEncoder.encode("user"));
             Set<Role> roles = new HashSet<>();
             roles.add(roleUser);
@@ -63,4 +69,3 @@ public class Start implements CommandLineRunner {
         }
     }
 }
-
