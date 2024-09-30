@@ -32,10 +32,10 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return name;  // Это значение будет использоваться как роль в Spring Security
+        return name;
     }
 
-    // Геттеры и сеттеры
+
     public Long getId() {
         return id;
     }

@@ -47,6 +47,9 @@ public class User implements UserDetails {
         this.age = age;
         this.username = username;
     }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public User() {
     }
@@ -104,7 +107,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles;
     }
 
     @Override
