@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,12 +41,13 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
-    public User(String password, String name, String lastName, Byte age, String username) {
+    public User(String password, String name, String lastName, Byte age, String username, Set<Role> roles) {
         this.password = password;
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.username = username;
+        this.roles = roles;
     }
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
