@@ -35,18 +35,20 @@ public class AdminContoller {
     return "redirect:/admin/all-users";
     }
 
+    @PostMapping("/admin/update-user")
+    public String updateUser(@ModelAttribute("user")User user) {
+        userService.saveUser(user);
+        return "redirect:/admin/all-users";
+    }
 
-    @GetMapping("/admin/edit/{id}")
-    public ModelAndView editUser(@PathVariable(name = "id") Long id) {
+
+    @GetMapping("/admin/edit{id}")
+    public String editUser(@RequestParam(name = "id") Long id, Model model) {
         User user = service.findUserById(id);
-        ModelAndView mav = new ModelAndView("user_form");
-        mav.addObject("user", user);
-
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-
-        mav.addObject("roles", roles);
-
-        return mav;
+        model.addAttribute("user", user);
+        List<Role> roles = roleRepository.findAll();
+        model.addAttribute("roles", roles);
+        return "user_form_edit";
     }
 
     @GetMapping("/admin/all-users")
