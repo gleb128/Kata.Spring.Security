@@ -21,14 +21,13 @@
   </p>
 
   <p>
-    <label>Roles:
-
-      <input type="checkbox" name="roles"
-             th:each="role : ${roles}"
-             th:text="${role.name}"
-             th:value="${role.id}"
-             th:field="*{roles}"
-      />
+    <label>Roles:</label>
+    <input type="checkbox" name="roleIds"
+           th:each="role : ${roles}"
+           th:text="${role.name}"
+           th:value="${role.id}"
+           th:checked="${user.roles.contains(role)}" />
+  </p>
     </label>
   </p>
   <p>

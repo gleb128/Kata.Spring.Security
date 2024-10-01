@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,16 +30,21 @@ public class AdminContoller {
         return "user_form";
     }
 
-    @PostMapping("/admin/save-new-user")
-    public String saveUser(@ModelAttribute("user")User user) {
-    userService.saveUser(user);
-    return "redirect:/admin/all-users";
+    @PostMapping("/admin/update-user")
+    public String updateUser(@ModelAttribute("user") User user,
+                             @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
+        if (roleIds == null) {
+            roleIds = new ArrayList<>();
+        }
+        userService.updateUser(user, roleIds);
+        return "redirect:/admin/all-users";
     }
 
-    @PostMapping("/admin/update-user")
-    public String updateUser(@ModelAttribute("user")User user) {
-        userService.saveUser(user);
-        return "redirect:/admin/all-users";
+    @PostMapping("/admin/save-new-user")
+    public String saveUser(@ModelAttribute("user")User user) {
+
+    userService.saveUser(user);
+    return "redirect:/admin/all-users";
     }
 
 
