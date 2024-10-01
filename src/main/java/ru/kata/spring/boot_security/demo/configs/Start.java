@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -46,6 +47,7 @@ public class Start implements CommandLineRunner {
         if (userRepository.findByUsername("admin") == null) {
             User admin = new User();
             admin.setUsername("admin");
+            admin.setName("admin1");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setAge((byte) 30);
             admin.setLastName("admin1");
@@ -59,6 +61,7 @@ public class Start implements CommandLineRunner {
         if (userRepository.findByUsername("user") == null) {
             User user = new User();
             user.setUsername("user");
+            user.setName("user1");
             user.setAge((byte) 30);
             user.setLastName("user1");
             user.setPassword(passwordEncoder.encode("user"));
