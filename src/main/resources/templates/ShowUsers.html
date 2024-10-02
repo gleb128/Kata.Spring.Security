@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User List</title>
+  <title>Admin panel</title>
   <style>
     table {
       width: 30%;
@@ -21,8 +21,11 @@
     }
   </style>
 </head>
+<form th:action="@{/logout}" method="post">
+  <button type="submit">Logout</button>
+</form>
 <body>
-<h1>User List</h1>
+<h1>Admin control panel</h1>
 <input type="button" value="Add"
        ONCLICK="window.location.href = '/admin/new-user'">
 <br>
