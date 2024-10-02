@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsService userDetailsService) {
-        this.successUserHandler     = successUserHandler;
+        this.successUserHandler = successUserHandler;
         this.userDetailsService = userDetailsService;
     }
 
@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)

@@ -18,18 +18,6 @@
     <label>Password:</label>
     <input type="password" th:field="*{password}" />
   </p>
-
-  <p>
-    <label>Roles:
-
-      <input type="checkbox" name="roles"
-             th:each="role : ${roles}"
-             th:text="${role.name}"
-             th:value="${role.id}"
-             th:field="*{roles}"
-      />
-    </label>
-  </p>
   <p>
     <button type="submit">Save</button>
   </p>
