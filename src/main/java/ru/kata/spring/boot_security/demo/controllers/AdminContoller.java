@@ -31,8 +31,7 @@ public class AdminContoller {
     }
 
     @PostMapping("/admin/update-user")
-    public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
         if (roleIds == null) {
             roleIds = new ArrayList<>();
         }
@@ -41,10 +40,10 @@ public class AdminContoller {
     }
 
     @PostMapping("/admin/save-new-user")
-    public String saveUser(@ModelAttribute("user")User user) {
+    public String saveUser(@ModelAttribute("user") User user) {
 
-    userService.saveUser(user);
-    return "redirect:/admin/all-users";
+        userService.saveUser(user);
+        return "redirect:/admin/all-users";
     }
 
 
@@ -65,12 +64,12 @@ public class AdminContoller {
         model.addAttribute("roles", roles);
         return "ShowUsers";
     }
+
     @PostMapping("/admin/delete")
     public String deleteUser(@RequestParam("id") Long id) {
-    userService.deleteUser(id);
-    return "redirect:/admin/all-users";
+        userService.deleteUser(id);
+        return "redirect:/admin/all-users";
     }
-
 
 
 }
