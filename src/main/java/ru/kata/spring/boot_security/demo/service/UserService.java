@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.repository.UserServiceInterface;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityManager;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserServiceInterface {
     @PersistenceContext
     private EntityManager em;
 
@@ -30,6 +31,16 @@ public class UserService implements UserDetailsService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
+
+    @Autowired
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, @Lazy PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
+    @Transactional
     public void updateUser(User user, List<Long> roleIds) {
         List<Role> roles = roleRepository.findAllById(roleIds);
         user.setRoles(new HashSet<>(roles));
@@ -40,12 +51,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-    @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, @Lazy PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,10 +59,9 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
-
         return user;
     }
+
     @Transactional
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
@@ -93,8 +97,4 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-    @Transactional
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class).setParameter("paramId", idMin).getResultList();
-    }
 }
