@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService, UserServiceInterface {
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -62,14 +62,13 @@ public class UserService implements UserDetailsService, UserServiceInterface {
         return user;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
     }
 
     @Transactional(readOnly = true)
-    @Query("SELECT u FROM User u JOIN FETCH u.roles")
     public List<User> allUsers() {
         return userRepository.findAll();
     }
