@@ -48,7 +48,7 @@ public class AdminContoller {
     }
 
 
-    @GetMapping("/admin/edit{id}")
+    @GetMapping("/admin/edit")
     public String editUser(@RequestParam(name = "id") Long id, Model model) {
         User user = userServiceInterface.findUserById(id);
         model.addAttribute("user", user);

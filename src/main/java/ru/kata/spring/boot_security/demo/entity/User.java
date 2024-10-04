@@ -14,19 +14,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
+
     private String username;
 
-    @Column(name = "password")
+
     private String password;
 
-    @Column(name = "name")
+
     private String name;
 
-    @Column(name = "lastName")
+
     private String lastName;
 
-    @Column(name = "age")
+
     private Byte age;
 
     @ManyToMany(fetch = FetchType.LAZY)
