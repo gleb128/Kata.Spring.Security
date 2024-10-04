@@ -24,8 +24,8 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService, UserServiceInterface {
-    @PersistenceContext
-    private EntityManager em;
+
+
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
