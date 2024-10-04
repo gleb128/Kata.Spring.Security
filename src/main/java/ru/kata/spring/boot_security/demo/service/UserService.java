@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,7 +46,7 @@ public class UserService implements UserDetailsService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -54,14 +55,17 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
+
         return user;
     }
-
+    @Transactional
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
     }
 
+    @Transactional(readOnly = true)
+    @Query("SELECT u FROM User u JOIN FETCH u.roles")
     public List<User> allUsers() {
         return userRepository.findAll();
     }
