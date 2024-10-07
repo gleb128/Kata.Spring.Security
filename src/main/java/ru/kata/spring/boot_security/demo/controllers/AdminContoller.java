@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.repository.UserServiceInterface;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +18,12 @@ import java.util.List;
 @Controller
 public class AdminContoller {
     @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private UserServiceInterface userServiceInterface;
 
     @GetMapping("/admin/new-user")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-        List<Role> roles = roleRepository.findAll();
+        List<Role> roles = userServiceInterface.findAll();
         model.addAttribute("roles", roles);
         return "user_form";
     }
@@ -52,7 +49,7 @@ public class AdminContoller {
     public String editUser(@RequestParam(name = "id") Long id, Model model) {
         User user = userServiceInterface.findUserById(id);
         model.addAttribute("user", user);
-        List<Role> roles = roleRepository.findAll();
+        List<Role> roles = userServiceInterface.findAll();
         model.addAttribute("roles", roles);
         return "user_form_edit";
     }
@@ -60,7 +57,7 @@ public class AdminContoller {
     @GetMapping("/admin/all-users")
     public String ShowUsers(Model model) {
         List<User> users = userServiceInterface.allUsers();
-        List<Role> roles = (List<Role>) roleRepository.findAll();
+        List<Role> roles = (List<Role>) userServiceInterface.findAll();
         model.addAttribute("users", users);
         model.addAttribute("roles", roles);
         return "ShowUsers";
